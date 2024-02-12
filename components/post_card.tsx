@@ -42,7 +42,7 @@ export default function PostCard({ post }: Props) {
               <p className="text-slate-500">{post.nbComments}</p>
             </div>
             <div className="flex items-center gap-1">
-              <Eye size={20} className="text-color-slate-500" />
+              <Eye size={20} className="text-slate-500" />
               <p className="text-slate-500">{post.nbViews}</p>
             </div>
           </div>
