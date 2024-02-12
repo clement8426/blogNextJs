@@ -3,6 +3,7 @@ import PageContainer from "./page-container";
 import { HeaderNavigation } from "./header-navigation";
 import ProfileButton from "./profile-button";
 import { ResponsiveMenu } from "./responsive-menu";
+import ToggleTheme from "./toggle-theme";
 
 export default function Header() {
   return (
@@ -22,8 +23,9 @@ export default function Header() {
           {/*navigation shadcn*/}
           <HeaderNavigation />
           {/*button*/}
-          <div className="flex itmes-center">
+          <div className="flex itmes-center gap-2">
             {/* toggle */}
+            <ToggleTheme />
             <ProfileButton />
           </div>
         </div>
