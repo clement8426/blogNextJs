@@ -1,10 +1,16 @@
+"use client";
 import { Post } from "@/types";
 import PageContainer from "@/components/page-container";
 import { Separator } from "@/components/ui/separator";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Eye, MessageCircle } from "lucide-react";
+import { usePost } from "@/hooks/usePost";
 
-export default function SinglePostPage() {
+export default function SinglePostPage({
+  params,
+}: {
+  params: { slug: string };
+}) {
   const POST: Post = {
     id: 1,
     category: "React",
@@ -20,6 +26,11 @@ export default function SinglePostPage() {
     slug: "react-state-management-choosing-right-solution",
     content: "Hello World!",
   };
+  const { slug } = params;
+  const { data: post, isFetching, error } = usePost(slug);
+
+  if (isFetching) return <p>Loading...</p>;
+  if (error) return <p>Error</p>;
 
   return (
     <PageContainer>
@@ -34,7 +45,7 @@ export default function SinglePostPage() {
           <div className="h-full w-full flex flex-col justify-center items-center">
             <div className="sm:max-w-xl max-w-xs bg-secondary/80 p-4 rounded-lg">
               <h1 className="text-center font-bold text-3xl sm:text-5xl text-black dark:text-white">
-                {POST.title}
+                {post?.title}
               </h1>
             </div>
           </div>
@@ -43,30 +54,32 @@ export default function SinglePostPage() {
           <div className="flex justify-center items-center gap-3">
             <Avatar>
               <AvatarImage src="/img/avatar.png" />
-              <AvatarFallback>{POST.author}</AvatarFallback>
+              {/* <AvatarFallback>{POST.author}</AvatarFallback> */}
             </Avatar>
             <div>
-              <p>{POST.author}</p>
-              <p className="text-slate-500 text-sm">
-                Posted on {new Date(POST.date).toLocaleDateString()}
-              </p>
+              {/* <p>{POST.author}</p> */}
+              {post?.createdAt && (
+                <p className="text-slate-500 text-sm">
+                  Posted on {new Date(post?.createdAt).toLocaleDateString()}
+                </p>
+              )}
             </div>
           </div>
           <div className="flex gap-2">
             <div className="flex items-center gap-1">
               <MessageCircle size={24} />
-              <p>{POST.nbComments}</p>
+              <p>{post?.nbComments}</p>
             </div>
             <div className="flex items-center gap-1">
               <Eye size={24} />
-              <p>{POST.nbViews}</p>
+              <p>{post?.view}</p>
             </div>
           </div>
         </div>
         <Separator />
         <div
           className="mt-6"
-          dangerouslySetInnerHTML={{ __html: POST.content as string }}
+          dangerouslySetInnerHTML={{ __html: post?.content as string }}
         ></div>
       </div>
     </PageContainer>

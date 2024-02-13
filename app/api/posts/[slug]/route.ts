@@ -1,4 +1,5 @@
 import { Post } from "@/types";
+import prisma from "@/lib/connect";
 import { NextResponse } from "next/server";
 
 const POST: Post = {
@@ -22,5 +23,19 @@ export const GET = async (
   { params }: { params: { slug: string } }
 ) => {
   const { slug } = params;
-  return NextResponse.json(POST, { status: 200 });
+
+  try {
+    const post = await prisma.post.update({
+      where: { slug },
+      data: { view: { increment: 1 } },
+    });
+    return NextResponse.json(post, { status: 200 });
+  } catch (error) {
+    return NextResponse.json(
+      {
+        error: "Something went wrong. Please try again later.",
+      },
+      { status: 500 }
+    );
+  }
 };

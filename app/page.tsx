@@ -8,8 +8,11 @@ import { CATEGORIES } from "@/utils/categories";
 import Link from "next/link";
 import PostsList from "../components/posts-list";
 import { POSTS } from "@/utils/posts";
+import { usePosts } from "@/hooks/usePosts";
 
 export default function Home() {
+  const { data: posts, isFetching } = usePosts();
+
   return (
     <PageContainer>
       <div className="py-10 px-4">
@@ -46,7 +49,7 @@ export default function Home() {
           ))}
         </div>
         {/* 3 section POST */}
-        <PostsList posts={POSTS} />
+        {!isFetching && <PostsList posts={posts} />}
       </div>
     </PageContainer>
   );
