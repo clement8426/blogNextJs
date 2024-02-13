@@ -3,15 +3,14 @@
 import { Button } from "@/components/ui/button";
 import PageContainer from "@/components/page-container";
 import { Input } from "@/components/ui/input";
-import { Category } from "@/types";
-import { CATEGORIES } from "@/utils/categories";
 import Link from "next/link";
 import PostsList from "../components/posts-list";
-import { POSTS } from "@/utils/posts";
 import { usePosts } from "@/hooks/usePosts";
+import { useCategories } from "@/hooks/useCategories";
 
 export default function Home() {
   const { data: posts, isFetching } = usePosts();
+  const { data: categories } = useCategories();
 
   return (
     <PageContainer>
@@ -42,9 +41,11 @@ export default function Home() {
         </div>
         {/* 2 section CATEGOEIRES */}
         <div className=" mt-4 flex flex-col md:flex-row justify-center items-center gap-4 ">
-          {CATEGORIES.map((category: Category) => (
+          {categories?.map((category: Category) => (
             <Button variant="outline" key={category.id}>
-              <Link href={`/categories/${category.slug}`}>{category.name}</Link>
+              <Link href={`/categories/${category.slug}`}>
+                {category.title}
+              </Link>
             </Button>
           ))}
         </div>
