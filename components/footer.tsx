@@ -16,7 +16,7 @@ export default function Footer() {
           >
             NextBlog
           </h1>
-          <div className="flex flex-col md:flex-row gap-2">
+          <div className="hidden sm:flex flex-col md:flex-row gap-2">
             {CATEGORIES.map((category: Category) => (
               <div key={category.id}>
                 <Link href={`/categories/${category.slug}`}>

@@ -1,8 +1,18 @@
+import { getAuthSession } from "@/lib/auth-options";
 import prisma from "@/lib/connect";
 import { NextResponse } from "next/server";
 
 export const GET = async (req: Request) => {
   try {
+    // const session = await getAuthSession();
+
+    // if (!session || !session.user) {
+    //   return NextResponse.json(
+    //     { message: "Not authenticated" },
+    //     { status: 403 }
+    //   );
+    // }
+
     const { searchParams } = new URL(req.url);
     const catSlug = searchParams.get("cat");
 

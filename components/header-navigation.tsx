@@ -19,7 +19,7 @@ import { Category } from "@/types";
 export function HeaderNavigation() {
   return (
     <NavigationMenu>
-      <NavigationMenuList>
+      <NavigationMenuList className="hidden sm:flex">
         <NavigationMenuItem>
           <NavigationMenuTrigger>Categories</NavigationMenuTrigger>
           <NavigationMenuContent>
