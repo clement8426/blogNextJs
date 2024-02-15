@@ -7,6 +7,7 @@ import Link from "next/link";
 import PostsList from "../components/posts-list";
 import { usePosts } from "@/hooks/usePosts";
 import { useCategories } from "@/hooks/useCategories";
+import { Category } from "@prisma/client";
 
 export default function Home() {
   const { data: posts, isFetching } = usePosts();

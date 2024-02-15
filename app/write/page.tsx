@@ -24,7 +24,9 @@ import { useCategories } from "@/hooks/useCategories";
 import { Button } from "@/components/ui/button";
 import { useMutation } from "react-query";
 import axios from "axios";
-import { Category, Post } from "@prisma/client";
+import { Post } from "@prisma/client";
+import { Category } from "@/types";
+
 import { slugify } from "@/utils/slugify";
 import Image from "next/image";
 import { Textarea } from "@/components/ui/textarea";
@@ -136,7 +138,7 @@ export default function WritePage() {
             <SelectContent>
               {categories.map((category: Category) => (
                 <SelectItem key={category.id} value={category.slug}>
-                  {category.title}
+                  {category.name}
                 </SelectItem>
               ))}
             </SelectContent>
