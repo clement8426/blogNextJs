@@ -20,6 +20,7 @@ export const POST = async (req: Request) => {
     const file: File | null = data.get("file") as unknown as File;
     if (!file) {
       return NextResponse.json({ message: "No file" }, { status: 400 });
+    }
   } catch (error) {
     return NextResponse.json(
       { message: "Something went wrong" },
