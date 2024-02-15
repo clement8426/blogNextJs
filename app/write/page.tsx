@@ -15,21 +15,19 @@ import {
 } from "@/components/ui/select";
 import { useCategories } from "@/hooks/useCategories";
 
-import "react-quill/dist/quill.snow.css";
-
-import "react-quill/dist/quill.snow.css";
-import dynamic from "next/dynamic";
-const ReactQuill = dynamic(() => import("react-quill"), {
-  loading: () => <p>Loading ...</p>,
-  ssr: false,
-});
+// import dynamic from "next/dynamic";
+// const ReactQuill = dynamic(() => import("react-quill"), {
+//   loading: () => <p>Loading...</p>,
+//   ssr: false,
+// });
 
 import { Button } from "@/components/ui/button";
 import { useMutation } from "react-query";
 import axios from "axios";
-import { Post } from "@prisma/client";
+import { Category, Post } from "@prisma/client";
 import { slugify } from "@/utils/slugify";
 import Image from "next/image";
+import { Textarea } from "@/components/ui/textarea";
 
 export default function WritePage() {
   const [title, setTitle] = useState("");
@@ -57,6 +55,7 @@ export default function WritePage() {
   useLayoutEffect(() => {
     if (!session) {
       router.replace("/login");
+      return;
     }
   }, [router, session]);
 
@@ -144,12 +143,18 @@ export default function WritePage() {
           </Select>
         )}
         {/* content */}
-        <ReactQuill
+        {/* <ReactQuill
           className="mt-6"
           placeholder="Write your post here"
           value={content}
           onChange={setContent}
-        ></ReactQuill>
+        ></ReactQuill> */}
+        <Textarea
+          className="mt-6 w-full h-40 border border-gray-300 rounded-md p-2"
+          placeholder="Write your post here"
+          value={content}
+          onChange={(e) => setContent(e.target.value)}
+        />
         {/* button  */}
         <Button disabled={isLoading} className="mt-6" onClick={handleSubmit}>
           {isLoading ? "Creating your article" : "Publish"}
