@@ -22,7 +22,7 @@ export default function PostCard({ post }: Props) {
         <CardHeader>
           <div className="aspect-square relative">
             <Image
-              src="/img/mac_wallpaper.jpg"
+              src={post.image || "/img/mac_wallpaper.jpg"} // Utilisez l'URL de l'image si elle est définie, sinon utilisez l'image par défaut
               fill
               alt={post.title}
               className="aspect-square object-cover transition-all duration-300 hover:scale-110"

@@ -16,11 +16,8 @@ export const POST = async (req: Request) => {
   const imagePath = path.join(process.cwd(), `/public${imageUrl}`);
 
   try {
-    const data = await req.formData();
-    const file: File | null = data.get("file") as unknown as File;
-    if (!file) {
-      return NextResponse.json({ message: "No file" }, { status: 400 });
-    }
+    await writeFile(imagePath, buffer);
+    return NextResponse.json(imageUrl, { status: 200 });
   } catch (error) {
     return NextResponse.json(
       { message: "Something went wrong" },

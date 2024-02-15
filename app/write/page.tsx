@@ -47,9 +47,9 @@ export default function WritePage() {
 
   const router = useRouter();
 
-  if (!session) {
-    router.replace("/login");
-  }
+  // if (!session) {
+  //   router.replace("/login");
+  // }
 
   const onChangeFile = (e: SyntheticEvent) => {
     const files = (e.target as HTMLInputElement).files;
@@ -65,7 +65,15 @@ export default function WritePage() {
     const image = await uploadImage();
     console.log("image is", image);
 
-    if (title !== "" && catSlug !== "" && content !== "" && !image) {
+    if (
+      title !== "" &&
+      catSlug !== "" &&
+      content !== "" &&
+      image !== undefined &&
+      image !== null
+    ) {
+      console.log("Submitting post...");
+
       await mutate({
         title,
         catSlug,

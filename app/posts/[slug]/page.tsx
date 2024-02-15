@@ -38,7 +38,9 @@ export default function SinglePostPage({
         <div
           className="rounded-lg aspect-square md:aspect-[2.4/1] overflow-hidden bg-cover"
           style={{
-            backgroundImage: "url(/img/mac_wallpaper.jpg)",
+            backgroundImage: post?.image
+              ? `url(${post.image})`
+              : "url(/img/mac_wallpaper.jpg)", // Utilisez l'URL de l'image si elle est définie, sinon utilisez l'image par défaut
             backgroundPosition: "center",
           }}
         >
