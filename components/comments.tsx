@@ -11,6 +11,7 @@ import axios from "axios";
 import { useComments } from "@/hooks/useComments";
 import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar";
 import { CommentWithUser } from "@/types";
+import { Comment } from "@prisma/client";
 
 function Comments({ postSlug }: { postSlug: string }) {
   const { status } = useSession();
