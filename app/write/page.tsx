@@ -5,7 +5,7 @@ import { useRouter } from "next/navigation";
 import PageContainer from "@/components/page-container";
 import PageTitle from "@/components/page-title";
 import { Input } from "@/components/ui/input";
-import { SyntheticEvent, useState } from "react";
+import { SyntheticEvent, useLayoutEffect, useState } from "react";
 import {
   Select,
   SelectContent,
@@ -16,7 +16,14 @@ import {
 import { useCategories } from "@/hooks/useCategories";
 
 import "react-quill/dist/quill.snow.css";
-import ReactQuill from "react-quill";
+
+import "react-quill/dist/quill.snow.css";
+import dynamic from "next/dynamic";
+const ReactQuill = dynamic(() => import("react-quill"), {
+  loading: () => <p>Loading ...</p>,
+  ssr: false,
+});
+
 import { Button } from "@/components/ui/button";
 import { useMutation } from "react-query";
 import axios from "axios";
@@ -34,22 +41,24 @@ export default function WritePage() {
 
   const { data: categories, isFetching } = useCategories();
 
-  const { mutate, isLoading } = useMutation(
-    (newPost: Partial<Post>): Promise<any> => axios.post("/api/posts", newPost),
-    {
-      onSuccess: (data) => {
-        console.log("data on success", data);
-      },
-    }
-  );
+  const router = useRouter();
+
+  const createPost = (newPost: Partial<Post>): Promise<any> =>
+    axios.post("/api/posts", newPost).then((res) => res.data);
+
+  const { mutate, isLoading } = useMutation(createPost, {
+    onSuccess: (data: Post) => {
+      router.push(`/posts/${data.slug}`);
+    },
+  });
 
   const { data: session } = useSession();
 
-  const router = useRouter();
-
-  // if (!session) {
-  //   router.replace("/login");
-  // }
+  useLayoutEffect(() => {
+    if (!session) {
+      router.replace("/login");
+    }
+  }, [router, session]);
 
   const onChangeFile = (e: SyntheticEvent) => {
     const files = (e.target as HTMLInputElement).files;
@@ -142,8 +151,8 @@ export default function WritePage() {
           onChange={setContent}
         ></ReactQuill>
         {/* button  */}
-        <Button className="mt-6" onClick={handleSubmit}>
-          Publish
+        <Button disabled={isLoading} className="mt-6" onClick={handleSubmit}>
+          {isLoading ? "Creating your article" : "Publish"}
         </Button>
       </div>
     </PageContainer>

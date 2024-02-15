@@ -5,6 +5,7 @@ import { Separator } from "@/components/ui/separator";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Eye, MessageCircle } from "lucide-react";
 import { usePost } from "@/hooks/usePost";
+import Comments from "@/components/comments";
 
 export default function SinglePostPage({
   params,
@@ -40,7 +41,7 @@ export default function SinglePostPage({
           style={{
             backgroundImage: post?.image
               ? `url(${post.image})`
-              : "url(/img/mac_wallpaper.jpg)", // Utilisez l'URL de l'image si elle est définie, sinon utilisez l'image par défaut
+              : "url(/img/mac_wallpaper.jpg)",
             backgroundPosition: "center",
           }}
         >
@@ -83,6 +84,7 @@ export default function SinglePostPage({
           className="mt-6"
           dangerouslySetInnerHTML={{ __html: post?.content as string }}
         ></div>
+        <Comments postSlug={slug} />
       </div>
     </PageContainer>
   );
